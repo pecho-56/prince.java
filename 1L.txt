@@ -1,0 +1,25 @@
+%{
+#include <stdio.h>
+%}
+
+%%
+int|float|if|else|while|for|return        { printf("Keyword\t\t: %s\n", yytext); }
+[0-9]+(\.[0-9]+)?                         { printf("Number\t\t: %s\n", yytext); }
+[a-zA-Z_][a-zA-Z0-9_]*                    { printf("Identifier\t: %s\n", yytext); }
+[\+\-\*\/\=]                              { printf("Operator\t: %s\n", yytext); }
+[{}();,]                                 { printf("Special Symbol\t: %s\n", yytext); }
+[ \t\n]+                                 { /* ignore spaces and newlines */ }
+.                                        { printf("Unknown\t\t: %s\n", yytext); }
+%%
+
+int yywrap()
+{
+    return 1;
+}
+
+int main()
+{
+    printf("Enter the source code (end with Ctrl+D):\n\n");
+    yylex();
+    return 0;
+}
